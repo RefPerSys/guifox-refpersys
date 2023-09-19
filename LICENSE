@@ -1,6 +1,11 @@
 MIT License
 
-Copyright (c) 2023 RefPerSys
+For the guifox-refpersys software (using FOX-toolkit, see fox-toolkit.org)
+communicating with the RefPerSys expert system inference engine
+or other software. See also refpersys.org and https://github.com/RefPerSys/
+
+Copyright (c) 2023 the RefPerSys team (team@refpersys.org)
+Contact by email `basile@starynkevitch.net` in France for more.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
