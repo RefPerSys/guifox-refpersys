@@ -54,6 +54,9 @@
 #include <unitypes.h>
 #include <unistr.h>
 
+
+#include "fx.h"
+
 extern "C" const char*fxrps_progname;
 extern "C" const char fxrps_git_id[];
 extern "C" const char fxrps_shortgit_id[];
@@ -118,6 +121,22 @@ extern "C" void rps_fatal_stop_at (const char *, int) __attribute__((noreturn));
 #define FXRPS_FATALOUT_AT(Fil,Lin,...) FXRPS_FATALOUT_AT_BIS(Fil,Lin,##__VA_ARGS__)
 // typical usage would be FXRPS_FATALOUT("x=" << x)
 #define FXRPS_FATALOUT(...) FXRPS_FATALOUT_AT(__FILE__,__LINE__,##__VA_ARGS__)
+
+
+
+class FoxRpsWindow : public FXMainWindow
+{
+
+  // Macro for class hierarchy declarations
+  FXDECLARE(FoxRpsWindow);
+private:
+  FXHorizontalFrame* win_contents;
+protected:
+  FoxRpsWindow() : win_contents(nullptr) {};
+  FoxRpsWindow(FXApp*app);
+  virtual void create(void);
+  virtual ~FoxRpsWindow();
+}; // end class FoxRpsWindow
 
 
 #endif /*   FOXRPS_INCLUDED */

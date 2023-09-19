@@ -54,6 +54,28 @@ fxrps_show_version(void)
   printf("\t compiled for FOX %s\n", fxrps_foxversion);
 }
 
+// Message Map for the  class
+FXDEFMAP(FoxRpsWindow) FoxRpsWindowMap[]=
+{
+  //________Message_Type_____________________ID____________Message_Handler_______
+};
+
+// Macro for the ScribbleApp class hierarchy implementation
+FXIMPLEMENT(FoxRpsWindow,FXMainWindow,FoxRpsWindowMap,
+            ARRAYNUMBER(FoxRpsWindowMap));
+
+
+FoxRpsWindow::~FoxRpsWindow()
+{
+#warning missing code in FoxRpsWindow::~FoxRpsWindow
+} // end FoxRpsWindow::~FoxRpsWindow
+
+void
+FoxRpsWindow::create(void)
+{
+#warning missing code in FoxRpsWindow::create
+} // end FoxRpsWindow::create
+
 int
 main(int argc, char**argv)
 {
@@ -62,13 +84,14 @@ main(int argc, char**argv)
   fxrps_stderr_istty = isatty(STDERR_FILENO);
   memset (fxrps_myhostname, 0, sizeof(fxrps_myhostname));
   gethostname(fxrps_myhostname, sizeof(fxrps_myhostname)-4);
-  if (argc > 1 && !strcmp(argv[1], "--version")) {
-    fxrps_show_version();
-    exit (EXIT_SUCCESS);
-  };
+  if (argc > 1 && !strcmp(argv[1], "--version"))
+    {
+      fxrps_show_version();
+      exit (EXIT_SUCCESS);
+    };
   fxrps_dlhandle = dlopen(nullptr, RTLD_NOW| RTLD_GLOBAL);
   if (!fxrps_dlhandle)
-      FXRPS_FATALOUT("failed to dlopen main program: " << dlerror());
+    FXRPS_FATALOUT("failed to dlopen main program: " << dlerror());
 } // end main
 
 
@@ -78,3 +101,5 @@ void fxrps_fatal_stop_at(const char*fil, int lin)
           fxrps_progname, (int)getpid(), fil, lin);
   abort();
 }
+
+//// end of file prog_fxrps.cc
