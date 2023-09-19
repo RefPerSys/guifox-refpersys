@@ -52,7 +52,16 @@ fxrps_show_version(void)
   printf("\t for OS: %s and arch %s\n", fxrps_opersys, fxrps_arch);
   printf("\t compiled on %s\n", fxrps_host);
   printf("\t compiled for FOX %s\n", fxrps_foxversion);
-}
+} // end fxrps_show_version
+
+static void
+fxrps_show_help(void)
+{
+  printf("%s usage:\n", fxrps_progname);
+  printf("\t --help               # give this help\n");
+  printf("\t --version            # give version information\n");
+#warning fxrps_show_help incomplete
+} // end fxrps_show_help
 
 // Message Map for the  class
 FXDEFMAP(FoxRpsWindow) FoxRpsWindowMap[]=
@@ -87,6 +96,11 @@ main(int argc, char**argv)
   if (argc > 1 && !strcmp(argv[1], "--version"))
     {
       fxrps_show_version();
+      exit (EXIT_SUCCESS);
+    };
+  if (argc > 1 && !strcmp(argv[1], "--help"))
+    {
+      fxrps_show_help();
       exit (EXIT_SUCCESS);
     };
   fxrps_dlhandle = dlopen(nullptr, RTLD_NOW| RTLD_GLOBAL);
