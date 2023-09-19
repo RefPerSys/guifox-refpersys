@@ -2,7 +2,8 @@
 ## SPDX-License-Identifier: MIT
 
 CXX= g++
-
+ASTYLE= astyle
+ASTYLEFLAGS= -v -s2 --style=gnu
 FXRPS_HOST := $(shell /bin/hostname -f)
 FXRPS_ARCH := $(shell /bin/uname -m)
 FXRPS_OPERSYS := $(shell /bin/uname -o | /bin/sed 1s/[^a-zA-Z0-9_]/_/g )
@@ -14,11 +15,11 @@ RM= /bin/rm -vf
 FXRPS_GIT_ID:= $(shell ./do-generate-gitid.sh)
 FXRPS_SHORTGIT_ID:= $(shell ./do-generate-gitid.sh -s)
 CXXFLAGS= -O2 -g3 -DGIT_ID=\"$(FXRPS_GIT_ID)\" -DSHORTGIT_ID=\"$(FXRPS_SHORTGIT_ID)\" \
-     -DFXRPS_HOST=\"$(FXRPS_HOST)\" -DFXRPS_ARCH=\"$(FXRPS_ARCH)" \
-      -DFXRPS_OPERSSYS=\"$(FXRPS_OPERSYS)" \
+     -DFXRPS_HOST=\"$(FXRPS_HOST)\" -DFXRPS_ARCH=\"$(FXRPS_ARCH)\" \
+      -DFXRPS_OPERSYS=\"$(FXRPS_OPERSYS)\" \
      -DFXRPS_FOXVERSION=\"$(shell fox-config --version)\" \
-     $(shell foxconfig --cflags)
-.PHONY: all clean indent gitpush
+     $(shell fox-config --cflags)
+.PHONY: all clean indent
 
 all: foxrps
 
@@ -27,3 +28,8 @@ clean:
 
 foxrps: $(OBJECTS)
 	$(LINK.cc) $(OBJECTS) $(shell fox-config --libs) -o $@
+
+
+indent:
+	for f in $(wildcard [a-z]*.hh) ; do $(ASTYLE) $(ASTYLEFLAGS) $$f ; done
+	for f in $(wildcard [a-z]*.cc) ; do $(ASTYLE) $(ASTYLEFLAGS) $$f ; done

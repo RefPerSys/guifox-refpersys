@@ -56,6 +56,14 @@ extern "C" const char*fxrps_progname;
 extern "C" const char fxrps_git_id[];
 extern "C" const char fxrps_shortgit_id[];
 extern "C" char fxrps_myhostname[];
+extern "C" const char fxrps_host[];
+extern "C" const char fxrps_foxversion[];
+extern "C" const char fxrps_arch[];
+extern "C" const char fxrps_opersys[];
+extern "C" const char fxrps_timestamp[];
+
+
+
 extern "C" void* fxrps_dlhandle;
 extern "C" bool fxrps_stderr_istty;
 
