@@ -31,7 +31,7 @@
 #endif
 
 const char*fxrps_progname;
-const char fxrps_shortgitid[] = SHORTGIT_ID;
+const char fxrps_shortgit_id[] = SHORTGIT_ID;
 const char fxrps_gitid[] = GIT_ID;
 const char fxrps_host[]= FXRPS_HOST;
 const char fxrps_foxversion[] = FXRPS_FOXVERSION;
@@ -98,7 +98,7 @@ main(int argc, char**argv)
 void fxrps_fatal_stop_at(const char*fil, int lin)
 {
   fprintf(stderr, "%s pid %d git %s aborting on file %s line %d\n",
-          fxrps_progname, (int)getpid(), fil, lin);
+          fxrps_progname, (int)getpid(), fxrps_shortgit_id, fil, lin);
   abort();
 }
 
