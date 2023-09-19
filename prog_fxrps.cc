@@ -54,8 +54,7 @@ main(int argc, char**argv)
   gethostname(fxrps_myhostname, sizeof(fxrps_myhostname)-4);
   fxrps_dlhandle = dlopen(nullptr, RTLD_NOW| RTLD_GLOBAL);
   if (!fxrps_dlhandle)
-    {
-    }
+      FXRPS_FATALOUT("failed to dlopen main program: " << dlerror());
 } // end main
 
 

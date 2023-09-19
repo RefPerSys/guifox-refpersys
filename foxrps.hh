@@ -32,6 +32,8 @@
 #include <functional>
 #include <string>
 #include <cstring>
+#include <ostream>
+#include <sstream>
 
 /// POSIX headers
 #include <getopt.h>
@@ -100,19 +102,18 @@ extern "C" void rps_fatal_stop_at (const char *, int) __attribute__((noreturn));
 
 
 
-#define FXRPS_FATALOUT_AT_BIS(Fil,Lin,...) do {			\
-      std::ostringstream outl##Lin;                             \
-      outl##Lin <<   __VA_ARGS__ << std::flush;                 \
-      outl##Lin.flush();                                        \
-      bool ontty = rps_stderr_istty;                            \
-      fprintf(stderr, "\n\n"                                    \
-              "%s*** fxrps FATAL:%s%s:%d: {%s}\n %s\n\n",	\
-              (ontty?FXRPS_TERMINAL_BOLD_ESCAPE:""),            \
-              (ontty?FXRPS_TERMINAL_NORMAL_ESCAPE:""),          \
-              Fil, Lin, __PRETTY_FUNCTION__,                    \
-              outl##Lin.str().c_str());                         \
-  };								\
-  fxrps_fatal_stop_at (Fil,Lin); } while(0)
+#define FXRPS_FATALOUT_AT_BIS(Fil,Lin,...) do {         \
+   std::ostringstream outl##Lin;                        \
+   outl##Lin <<   __VA_ARGS__ << std::flush;            \
+   outl##Lin.flush();                                   \
+   bool ontty = fxrps_stderr_istty;                     \
+   fprintf(stderr, "\n\n"                               \
+           "%s*** fxrps FATAL:%s%s:%d: {%s}\n %s\n\n",  \
+           (ontty?FXRPS_TERMINAL_BOLD_ESCAPE:""),       \
+           (ontty?FXRPS_TERMINAL_NORMAL_ESCAPE:""),     \
+           Fil, Lin, __PRETTY_FUNCTION__,               \
+           outl##Lin.str().c_str());                    \
+   fxrps_fatal_stop_at (Fil,Lin); } while(0)
 
 #define FXRPS_FATALOUT_AT(Fil,Lin,...) FXRPS_FATALOUT_AT_BIS(Fil,Lin,##__VA_ARGS__)
 // typical usage would be FXRPS_FATALOUT("x=" << x)
