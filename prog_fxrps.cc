@@ -30,7 +30,6 @@
 #error undefined FXRPS_OPERSYS
 #endif
 
-
 const char*fxrps_progname;
 const char fxrps_shortgitid[] = SHORTGIT_ID;
 const char fxrps_gitid[] = GIT_ID;
@@ -44,6 +43,17 @@ char fxrps_myhostname[80];
 void* fxrps_dlhandle;
 bool fxrps_stderr_istty;
 
+static void
+fxrps_show_version(void)
+{
+  printf("%s version information (on %s):\n", fxrps_progname, fxrps_myhostname);
+  printf("\t git %s\n", fxrps_gitid);
+  printf("\t built %s\n", fxrps_timestamp);
+  printf("\t for OS: %s and arch %s\n", fxrps_opersys, fxrps_arch);
+  printf("\t compiled on %s\n", fxrps_host);
+  printf("\t compiled for FOX %s\n", fxrps_foxversion);
+}
+
 int
 main(int argc, char**argv)
 {
@@ -52,6 +62,10 @@ main(int argc, char**argv)
   fxrps_stderr_istty = isatty(STDERR_FILENO);
   memset (fxrps_myhostname, 0, sizeof(fxrps_myhostname));
   gethostname(fxrps_myhostname, sizeof(fxrps_myhostname)-4);
+  if (argc > 1 && !strcmp(argv[1], "--version")) {
+    fxrps_show_version();
+    exit (EXIT_SUCCESS);
+  };
   fxrps_dlhandle = dlopen(nullptr, RTLD_NOW| RTLD_GLOBAL);
   if (!fxrps_dlhandle)
       FXRPS_FATALOUT("failed to dlopen main program: " << dlerror());
