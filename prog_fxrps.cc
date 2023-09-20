@@ -57,7 +57,7 @@ fxrps_show_version(void)
 static void
 fxrps_show_help(void)
 {
-  printf("%s usage:\n", fxrps_progname);
+  printf("%s usage (from %s:%d):\n", fxrps_progname, __FILE__, __LINE__);
   printf("\t --help               # give this help\n");
   printf("\t --version            # give version information\n");
 #warning fxrps_show_help incomplete
@@ -93,8 +93,14 @@ FoxRpsWindow::main_window()
   return fxrps_first_window;
 } // end FoxRpsWindow::main_window
 
-FoxRpsWindow::FoxRpsWindow(FXApp*app)
-  : FXMainWindow(app, FXString("foxrefpersys")),
+FoxRpsWindow::FoxRpsWindow(FXApp*app, int width, int height)
+  : FXMainWindow(app, FXString("foxrefpersys"),
+                 (FXIcon*)nullptr, // icon
+                 (FXIcon*)nullptr, // closed-icon
+                 DECOR_ALL,
+                 0, 0, //x,y
+                 width, height
+                ),
     win_contents(nullptr)
 {
 } // end FoxRpsWindow::FoxRpsWindow
@@ -113,11 +119,6 @@ main(int argc, char**argv)
       fxrps_show_version();
       exit (EXIT_SUCCESS);
     };
-  if (argc > 1 && !strcmp(argv[1], "--help"))
-    {
-      fxrps_show_help();
-      exit (EXIT_SUCCESS);
-    };
   fxrps_dlhandle = dlopen(nullptr, RTLD_NOW| RTLD_GLOBAL);
   if (!fxrps_dlhandle)
     FXRPS_FATALOUT("failed to dlopen main program: " << dlerror());
@@ -125,7 +126,13 @@ main(int argc, char**argv)
             "FOX gui interface for RefPerSys");
   /// C++ code can now use FxApp::instance()
   app.init(argc, argv);
-  fxrps_first_window = new FoxRpsWindow(&app);
+  if (argc > 1 && !strcmp(argv[1], "--help"))
+    {
+      fxrps_show_help();
+      exit (EXIT_SUCCESS);
+    };
+  fxrps_first_window = new FoxRpsWindow(&app, 200, 300);
+  fxrps_first_window->show();
   int ex= app.run();
   delete fxrps_first_window;
   fxrps_first_window = nullptr;

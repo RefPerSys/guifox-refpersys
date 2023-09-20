@@ -136,7 +136,7 @@ protected:
   virtual void create(void);
 public:
   virtual ~FoxRpsWindow();
-  FoxRpsWindow(FXApp*app);
+  FoxRpsWindow(FXApp*app, int width, int height);
   static  FoxRpsWindow*main_window(void);
 }; // end class FoxRpsWindow
 
