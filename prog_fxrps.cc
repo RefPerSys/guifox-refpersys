@@ -85,6 +85,21 @@ FoxRpsWindow::create(void)
 #warning missing code in FoxRpsWindow::create
 } // end FoxRpsWindow::create
 
+static FoxRpsWindow*fxrps_first_window;
+
+FoxRpsWindow*
+FoxRpsWindow::main_window()
+{
+  return fxrps_first_window;
+} // end FoxRpsWindow::main_window
+
+FoxRpsWindow::FoxRpsWindow(FXApp*app)
+  : FXMainWindow(app, FXString("foxrefpersys")),
+    win_contents(nullptr)
+{
+} // end FoxRpsWindow::FoxRpsWindow
+
+
 int
 main(int argc, char**argv)
 {
@@ -106,6 +121,15 @@ main(int argc, char**argv)
   fxrps_dlhandle = dlopen(nullptr, RTLD_NOW| RTLD_GLOBAL);
   if (!fxrps_dlhandle)
     FXRPS_FATALOUT("failed to dlopen main program: " << dlerror());
+  FXApp app(basename((char*)fxrps_progname),
+            "FOX gui interface for RefPerSys");
+  /// C++ code can now use FxApp::instance()
+  app.init(argc, argv);
+  fxrps_first_window = new FoxRpsWindow(&app);
+  int ex= app.run();
+  delete fxrps_first_window;
+  fxrps_first_window = nullptr;
+  return ex;
 } // end main
 
 
