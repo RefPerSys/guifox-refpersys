@@ -137,8 +137,13 @@ main(int argc, char**argv)
       fxrps_show_help();
       exit (EXIT_SUCCESS);
     };
-  int width=450;
-  int height=320;
+  FXRegistry& reg = app.reg();
+  int width=reg.readIntEntry("mainwin","width");
+  if (width<=0)
+    width=100;
+  int height=reg.readIntEntry("mainwin","height");
+  if (height<=0)
+    height=80;
 #warning initial width&height should be gotten from the FXRegistery
   fxrps_first_window = new FoxRpsWindow(&app, width, height);
   app.create();
