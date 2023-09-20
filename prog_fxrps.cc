@@ -51,7 +51,8 @@ fxrps_show_version(void)
   printf("\t built %s\n", fxrps_timestamp);
   printf("\t for OS: %s and arch %s\n", fxrps_opersys, fxrps_arch);
   printf("\t compiled on %s\n", fxrps_host);
-  printf("\t compiled for FOX %s\n", fxrps_foxversion);
+  printf("\t compiled for FOX %s, running %d.%d.%d\n",
+         fxrps_foxversion, fxversion[0], fxversion[1], fxversion[2]);
 } // end fxrps_show_version
 
 static void
@@ -123,6 +124,10 @@ main(int argc, char**argv)
   fxrps_dlhandle = dlopen(nullptr, RTLD_NOW| RTLD_GLOBAL);
   if (!fxrps_dlhandle)
     FXRPS_FATALOUT("failed to dlopen main program: " << dlerror());
+  if (fxversion[0] != FOX_MAJOR || fxversion[1] != FOX_MINOR)
+    FXRPS_FATALOUT("FOX version mismatch, needs "
+                   << FOX_MAJOR << "." << FOX_MINOR
+                   << " got " << fxversion[0] << "." << fxversion[1]);
   FXApp app(basename((char*)fxrps_progname),
             "FOX gui interface for RefPerSys");
   /// C++ code can now use FxApp::instance()
@@ -132,7 +137,10 @@ main(int argc, char**argv)
       fxrps_show_help();
       exit (EXIT_SUCCESS);
     };
-  fxrps_first_window = new FoxRpsWindow(&app, 200, 300);
+  int width=450;
+  int height=320;
+#warning initial width&height should be gotten from the FXRegistery
+  fxrps_first_window = new FoxRpsWindow(&app, width, height);
   app.create();
   fxrps_first_window->create();
   fxrps_first_window->show(PLACEMENT_SCREEN);
