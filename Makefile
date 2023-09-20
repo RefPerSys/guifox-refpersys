@@ -12,7 +12,10 @@ OBJECTS= $(patsubst %.cc, %.o, $(CXXSOURCES))
 RM= /bin/rm -vf
 FXRPS_GIT_ID:= $(shell ./do-generate-gitid.sh)
 FXRPS_SHORTGIT_ID:= $(shell ./do-generate-gitid.sh -s)
-CXXFLAGS= -O2 -g3 -DGIT_ID=\"$(FXRPS_GIT_ID)\" \
+OPTIMFLAGS= -O2
+DEBUGFLAGS= -g3
+CXXFLAGS= $(OPTIMFLAGS) $(DEBUGFLAGS) \
+     -DGIT_ID=\"$(FXRPS_GIT_ID)\" \
      -DSHORTGIT_ID=\"$(FXRPS_SHORTGIT_ID)\" \
      -DFXRPS_HOST=\"$(FXRPS_HOST)\" -DFXRPS_ARCH=\"$(FXRPS_ARCH)\" \
      -DFXRPS_OPERSYS=\"$(FXRPS_OPERSYS)\" \
