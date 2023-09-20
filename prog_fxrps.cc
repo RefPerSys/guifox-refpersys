@@ -137,6 +137,7 @@ main(int argc, char**argv)
       fxrps_show_help();
       exit (EXIT_SUCCESS);
     };
+#warning perhaps use FXSetting?
   printf("@@@@before FXRegistry  %s:%d\n", __FILE__, __LINE__);
   fflush(stdout);
   FXRegistry& reg = app.reg();
