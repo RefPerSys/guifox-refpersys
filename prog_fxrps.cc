@@ -129,7 +129,7 @@ main(int argc, char**argv)
                    << FOX_MAJOR << "." << FOX_MINOR
                    << " got " << fxversion[0] << "." << fxversion[1]);
   FXApp app(basename((char*)fxrps_progname),
-            "FOX gui interface for RefPerSys");
+            "RefPerSys.org");
   /// C++ code can now use FxApp::instance()
   app.init(argc, argv);
   if (argc > 1 && !strcmp(argv[1], "--help"))
@@ -137,10 +137,14 @@ main(int argc, char**argv)
       fxrps_show_help();
       exit (EXIT_SUCCESS);
     };
+  printf("@@@@before FXRegistry  %s:%d\n", __FILE__, __LINE__);
+  fflush(stdout);
   FXRegistry& reg = app.reg();
   int width=reg.readIntEntry("mainwin","width");
   if (width<=0)
     width=100;
+  printf("@@@@ width=%d %s:%d\n", width, __FILE__, __LINE__);
+  fflush(stdout);
   int height=reg.readIntEntry("mainwin","height");
   if (height<=0)
     height=80;
