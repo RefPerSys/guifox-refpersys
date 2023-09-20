@@ -82,6 +82,7 @@ FoxRpsWindow::~FoxRpsWindow()
 void
 FoxRpsWindow::create(void)
 {
+  FXMainWindow::create();
 #warning missing code in FoxRpsWindow::create
 } // end FoxRpsWindow::create
 
