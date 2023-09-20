@@ -132,7 +132,9 @@ main(int argc, char**argv)
       exit (EXIT_SUCCESS);
     };
   fxrps_first_window = new FoxRpsWindow(&app, 200, 300);
-  fxrps_first_window->show();
+  app.create();
+  fxrps_first_window->create();
+  fxrps_first_window->show(PLACEMENT_SCREEN);
   int ex= app.run();
   delete fxrps_first_window;
   fxrps_first_window = nullptr;

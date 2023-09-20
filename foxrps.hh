@@ -133,8 +133,8 @@ private:
   FXHorizontalFrame* win_contents;
 protected:
   FoxRpsWindow() : win_contents(nullptr) {};
-  virtual void create(void);
 public:
+  virtual void create(void);
   virtual ~FoxRpsWindow();
   FoxRpsWindow(FXApp*app, int width, int height);
   static  FoxRpsWindow*main_window(void);
