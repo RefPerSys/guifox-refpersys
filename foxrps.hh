@@ -131,8 +131,9 @@ class FoxRpsWindow : public FXMainWindow
   FXDECLARE(FoxRpsWindow);
 private:
   FXVerticalFrame win_vertframe;
+  FXLabel*win_toplabel;
 protected:
-  FoxRpsWindow() : win_vertframe(this) {};
+  FoxRpsWindow() : win_vertframe(this), win_toplabel(nullptr) {};
 public:
   virtual void create(void);
   virtual ~FoxRpsWindow();

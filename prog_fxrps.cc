@@ -79,6 +79,8 @@ FXIMPLEMENT(FoxRpsWindow,FXMainWindow,FoxRpsWindowMap,
 
 FoxRpsWindow::~FoxRpsWindow()
 {
+  delete win_toplabel;
+  win_toplabel=nullptr;
 #warning missing code in FoxRpsWindow::~FoxRpsWindow
 } // end FoxRpsWindow::~FoxRpsWindow
 
@@ -86,6 +88,11 @@ void
 FoxRpsWindow::create(void)
 {
   FXMainWindow::create();
+  char labuf[80];
+  memset (labuf, 0, sizeof(labuf));
+  snprintf(labuf, sizeof(labuf)-1, "%s git %s pid %d on %s",
+           fxrps_progname,  SHORTGIT_ID, (int)getpid(), fxrps_myhostname);
+  win_toplabel = new FXLabel(this, FXString(labuf));
 #warning missing code in FoxRpsWindow::create
 } // end FoxRpsWindow::create
 
