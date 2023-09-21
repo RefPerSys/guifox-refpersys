@@ -81,6 +81,8 @@ FoxRpsWindow::~FoxRpsWindow()
 {
   delete win_toplabel;
   win_toplabel=nullptr;
+  delete win_firstsep;
+  win_firstsep=nullptr;
 #warning missing code in FoxRpsWindow::~FoxRpsWindow
 } // end FoxRpsWindow::~FoxRpsWindow
 
@@ -92,7 +94,10 @@ FoxRpsWindow::create(void)
   memset (labuf, 0, sizeof(labuf));
   snprintf(labuf, sizeof(labuf)-1, "%s git %s pid %d on %s",
            fxrps_progname,  SHORTGIT_ID, (int)getpid(), fxrps_myhostname);
+  win_menubar = new FXMenuBar(this, LAYOUT_TOP);
+  win_menulabel = new FXLabel(win_menubar, FXString("App"));
   win_toplabel = new FXLabel(this, FXString(labuf));
+  win_firstsep = new FXHorizontalSeparator(this);
 #warning missing code in FoxRpsWindow::create
 } // end FoxRpsWindow::create
 
