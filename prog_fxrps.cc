@@ -98,6 +98,10 @@ FoxRpsWindow::create(void)
   win_menulabel = new FXMenuTitle(win_menubar, FXString("App"));
   win_toplabel = new FXLabel(this, FXString(labuf));
   win_firstsep = new FXHorizontalSeparator(this);
+  app_menu = new FXMenuPane(win_menubar);
+  new FXMenuTitle(win_menubar, tr("&App"),nullptr,app_menu);
+  edit_menu = new FXMenuPane(win_menubar);
+  new FXMenuTitle(win_menubar, tr("Edit"),nullptr,edit_menu);
 #warning missing code in FoxRpsWindow::create
 } // end FoxRpsWindow::create
 

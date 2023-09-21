@@ -134,12 +134,19 @@ private:
   FXVerticalFrame win_vertframe;
   FXMenuBar*win_menubar;
   FXMenuTitle*win_menulabel;
+  FXMenuPane*app_menu;
+  FXMenuPane*edit_menu;
   FXLabel*win_toplabel;
   FXHorizontalSeparator*win_firstsep;
 protected:
-  FoxRpsWindow() : win_vertframe(this),
-    win_menubar(nullptr),
-    win_toplabel(nullptr), win_firstsep(nullptr) {};
+  FoxRpsWindow()
+    : win_vertframe(this),
+      win_menubar(nullptr),
+      win_menulabel(nullptr),
+      app_menu(nullptr),
+      edit_menu(nullptr),
+      win_toplabel(nullptr),
+      win_firstsep(nullptr) {};
 public:
   virtual void create(void);
   virtual ~FoxRpsWindow();
