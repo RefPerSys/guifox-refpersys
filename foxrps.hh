@@ -130,9 +130,9 @@ class FoxRpsWindow : public FXMainWindow
   // Macro for class hierarchy declarations
   FXDECLARE(FoxRpsWindow);
 private:
-  FXHorizontalFrame* win_contents;
+  FXVerticalFrame win_vertframe;
 protected:
-  FoxRpsWindow() : win_contents(nullptr) {};
+  FoxRpsWindow() : win_vertframe(this) {};
 public:
   virtual void create(void);
   virtual ~FoxRpsWindow();

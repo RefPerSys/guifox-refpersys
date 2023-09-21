@@ -105,7 +105,7 @@ FoxRpsWindow::FoxRpsWindow(FXApp*app, int width, int height)
                  0, 0, //x,y
                  width, height
                 ),
-    win_contents(nullptr)
+    win_vertframe(this)
 {
 } // end FoxRpsWindow::FoxRpsWindow
 
