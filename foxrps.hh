@@ -132,7 +132,7 @@ class FoxRpsWindow : public FXMainWindow
 private:
   FXVerticalFrame win_vertframe;
   FXMenuBar*win_menubar;
-  FXLabel*win_menulabel;
+  FXMenuTitle*win_menulabel;
   FXLabel*win_toplabel;
   FXHorizontalSeparator*win_firstsep;
 protected:
