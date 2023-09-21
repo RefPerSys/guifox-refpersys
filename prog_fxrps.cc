@@ -132,6 +132,7 @@ main(int argc, char**argv)
                    << " got " << fxversion[0] << "." << fxversion[1]);
   FXApp app(basename((char*)fxrps_progname),
             "fox-refpersys.org");
+  constexpr int minwidth=100, minheight=80;
   /// C++ code can now use FxApp::instance()
   app.init(argc, argv);
   if (argc > 1 && !strcmp(argv[1], "--help"))
@@ -154,21 +155,19 @@ main(int argc, char**argv)
            reg.getUserDirectory().text(),
            __FILE__, __LINE__);
   int width=reg.readIntEntry("mainwin","width");
-  if (width<=0)
-    width=100;
-  printf("@@@@ width=%d %s:%d\n", width, __FILE__, __LINE__);
-  fflush(stdout);
+  if (width<=minwidth)
+    width=minwidth;
+  //printf("@@@@ width=%d %s:%d\n", width, __FILE__, __LINE__);
+  //fflush(stdout);
   int height=reg.readIntEntry("mainwin","height");
-  if (height<=0)
-    height=80;
-#warning initial width&height should be gotten from the FXRegistery
+  if (height<=minheight)
+    height=minheight;
   fxrps_first_window = new FoxRpsWindow(&app, width, height);
   app.create();
   fxrps_first_window->create();
   fxrps_first_window->show(PLACEMENT_SCREEN);
   int ex= app.run();
-  delete fxrps_first_window;
-  fxrps_first_window = nullptr;
+  /// don't delete the fxrps_first_window, it will be by FOX
   return ex;
 } // end main
 
