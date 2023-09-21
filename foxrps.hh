@@ -48,6 +48,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <assert.h>
+#include <signal.h>
 
 
 /// from GNU libunistring
@@ -144,6 +145,10 @@ public:
   virtual ~FoxRpsWindow();
   FoxRpsWindow(FXApp*app, int width, int height);
   static  FoxRpsWindow*main_window(void);
+  enum
+  {
+    ID__FIRST= FXMainWindow::ID_LAST,
+  };
 }; // end class FoxRpsWindow
 
 

@@ -178,6 +178,9 @@ main(int argc, char**argv)
   app.create();
   fxrps_first_window->create();
   fxrps_first_window->show(PLACEMENT_SCREEN);
+  ///
+  app.addSignal(SIGINT,&app,FXApp::ID_QUIT);
+  app.addSignal(SIGTERM,&app,FXApp::ID_QUIT);
   int ex= app.run();
   /// don't delete the fxrps_first_window, it will be by FOX
   return ex;
