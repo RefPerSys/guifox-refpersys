@@ -61,6 +61,8 @@ fxrps_show_help(void)
   printf("%s usage (from %s:%d):\n", fxrps_progname, __FILE__, __LINE__);
   printf("\t --help               # give this help\n");
   printf("\t --version            # give version information\n");
+  printf("# some FOX toolkit settings will be read from your configuration\n"
+         "# file ~/.config/fox-refpersys.org/foxrps.rc\n");
 #warning fxrps_show_help incomplete
 } // end fxrps_show_help
 
@@ -70,7 +72,7 @@ FXDEFMAP(FoxRpsWindow) FoxRpsWindowMap[]=
   //________Message_Type_____________________ID____________Message_Handler_______
 };
 
-// Macro for the ScribbleApp class hierarchy implementation
+// Macro for the FoxRpsWindow class hierarchy implementation
 FXIMPLEMENT(FoxRpsWindow,FXMainWindow,FoxRpsWindowMap,
             ARRAYNUMBER(FoxRpsWindowMap));
 
@@ -129,7 +131,7 @@ main(int argc, char**argv)
                    << FOX_MAJOR << "." << FOX_MINOR
                    << " got " << fxversion[0] << "." << fxversion[1]);
   FXApp app(basename((char*)fxrps_progname),
-            "RefPerSys.org");
+            "fox-refpersys.org");
   /// C++ code can now use FxApp::instance()
   app.init(argc, argv);
   if (argc > 1 && !strcmp(argv[1], "--help"))
@@ -137,10 +139,20 @@ main(int argc, char**argv)
       fxrps_show_help();
       exit (EXIT_SUCCESS);
     };
-#warning perhaps use FXSetting?
+#warning perhaps use FXSettings?
   printf("@@@@before FXRegistry  %s:%d\n", __FILE__, __LINE__);
   fflush(stdout);
   FXRegistry& reg = app.reg();
+  if (reg.read())
+    printf("@@@@reg sysdirs=%s userdir=%s read/appkey=%s vendkey=%s no=%ld\n",
+           reg.getSystemDirectories().text(),
+           reg.getUserDirectory().text(),
+           reg.getAppKey().text(), reg.getVendorKey().text(), reg.no());
+  else
+    printf("@@@failed to read registry sysdirs=%s userdir=%s %s:%d\n",
+           reg.getSystemDirectories().text(),
+           reg.getUserDirectory().text(),
+           __FILE__, __LINE__);
   int width=reg.readIntEntry("mainwin","width");
   if (width<=0)
     width=100;
