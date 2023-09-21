@@ -90,9 +90,9 @@ void
 FoxRpsWindow::create(void)
 {
   FXMainWindow::create();
-  char labuf[80];
+  char labuf[128];
   memset (labuf, 0, sizeof(labuf));
-  snprintf(labuf, sizeof(labuf)-1, "%s git %s pid %d on %s",
+  snprintf(labuf, sizeof(labuf)-1, "%s git %s\n pid %d on %s",
            fxrps_progname,  SHORTGIT_ID, (int)getpid(), fxrps_myhostname);
   win_menubar = new FXMenuBar(this, LAYOUT_TOP);
   win_menulabel = new FXMenuTitle(win_menubar, FXString("App"));
