@@ -95,10 +95,13 @@ FoxRpsWindow::create(void)
   snprintf(labuf, sizeof(labuf)-1, "%s git %s\n pid %d on %s",
            fxrps_progname,  SHORTGIT_ID, (int)getpid(), fxrps_myhostname);
   win_menubar = new FXMenuBar(this, LAYOUT_TOP);
+  printf("@@@win_menubar=%p (%s:%d)\n", win_menubar, __FILE__, __LINE__);
   win_menulabel = new FXMenuTitle(win_menubar, FXString("App"));
   win_toplabel = new FXLabel(this, FXString(labuf));
   win_firstsep = new FXHorizontalSeparator(this);
+  printf("@@@win_firstsep=%p (%s:%d)\n", win_firstsep, __FILE__, __LINE__);
   app_menu = new FXMenuPane(win_menubar);
+  printf("@@@app_menu=%p (%s:%d)\n", app_menu, __FILE__, __LINE__);
   new FXMenuTitle(win_menubar, tr("&App"),nullptr,app_menu);
   edit_menu = new FXMenuPane(win_menubar);
   new FXMenuTitle(win_menubar, tr("Edit"),nullptr,edit_menu);
