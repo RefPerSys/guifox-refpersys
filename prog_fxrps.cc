@@ -102,9 +102,14 @@ FoxRpsWindow::create(void)
   printf("@@@win_firstsep=%p (%s:%d)\n", win_firstsep, __FILE__, __LINE__);
   app_menu = new FXMenuPane(win_menubar);
   printf("@@@app_menu=%p (%s:%d)\n", app_menu, __FILE__, __LINE__);
-  new FXMenuTitle(win_menubar, tr("&App"),nullptr,app_menu);
+  auto apptitle = new FXMenuTitle(win_menubar, tr("&App"),nullptr,app_menu);
+  //apptitle->show();
   edit_menu = new FXMenuPane(win_menubar);
-  new FXMenuTitle(win_menubar, tr("Edit"),nullptr,edit_menu);
+  auto edittitle = new FXMenuTitle(win_menubar, tr("Edit"),nullptr,edit_menu);
+  //edittitle->show();
+  win_menubar->show();
+  win_vertframe.layout();
+  layout();
 #warning missing code in FoxRpsWindow::create
 } // end FoxRpsWindow::create
 
@@ -159,8 +164,8 @@ main(int argc, char**argv)
       fxrps_show_help();
       exit (EXIT_SUCCESS);
     };
-#warning perhaps use FXSettings?
-  printf("@@@@before FXRegistry  %s:%d\n", __FILE__, __LINE__);
+  //#warning perhaps use FXSettings?
+  //printf("@@@@before FXRegistry  %s:%d\n", __FILE__, __LINE__);
   fflush(stdout);
   FXRegistry& reg = app.reg();
   if (reg.read())
