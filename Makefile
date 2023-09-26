@@ -34,7 +34,7 @@ foxrps: $(OBJECTS)
 	$(LINK.cc) $(OBJECTS) $(shell fox-config --libs) -o $@
 
 %.o: %.cc foxrps.hh
-	$(COMPILE.cc) -c $< -o $@
+	$(COMPILE.cc)  $< -o $@
 
 indent:
 	for f in $(wildcard [a-z]*.hh) ; do $(ASTYLE) $(ASTYLEFLAGS) $$f ; done
