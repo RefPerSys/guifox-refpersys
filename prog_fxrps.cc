@@ -109,6 +109,7 @@ FoxRpsWindow::create(void)
   //edittitle->show();
   win_menubar->show();
   win_vertframe.layout();
+  win_vertframe.show();
   layout();
 #warning missing code in FoxRpsWindow::create
 } // end FoxRpsWindow::create
