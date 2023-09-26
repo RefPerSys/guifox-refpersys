@@ -181,8 +181,8 @@ main(int argc, char**argv)
   int height=reg.readIntEntry("mainwin","height");
   if (height<=minheight)
     height=minheight;
-  fxrps_first_window = new FoxRpsWindow(&app, width, height);
   app.create();
+  fxrps_first_window = new FoxRpsWindow(&app, width, height);
   fxrps_first_window->create();
   fxrps_first_window->show(PLACEMENT_SCREEN);
   ///
