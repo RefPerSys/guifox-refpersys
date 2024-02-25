@@ -1,6 +1,6 @@
 /****** file guifox-refpersys/prog_fxrps.cc ******
  * SPDX-License-Identifier: MIT
- * © Copyright 2023 Basile Starynkevitch
+ * © Copyright 2023 - 2024 Basile Starynkevitch
  ******/
 
 #include "foxrps.hh"
@@ -30,6 +30,8 @@
 #error undefined FXRPS_OPERSYS
 #endif
 
+extern "C" bool fxrps_debug;
+bool  fxrps_debug;
 const char*fxrps_progname;
 const char fxrps_shortgit_id[] = SHORTGIT_ID;
 const char fxrps_gitid[] = GIT_ID;
@@ -38,6 +40,10 @@ const char fxrps_foxversion[] = FXRPS_FOXVERSION;
 const char fxrps_arch[] = FXRPS_ARCH;
 const char fxrps_opersys[] = FXRPS_OPERSYS;
 const char fxrps_timestamp[] = __DATE__ "@" __TIME__;
+
+extern "C" void fxrps_fatal_stop_at(const char*fil, int lin)
+  __attribute__((noreturn));
+
 
 char fxrps_myhostname[80];
 void* fxrps_dlhandle;
@@ -148,6 +154,8 @@ main(int argc, char**argv)
       fxrps_show_version();
       exit (EXIT_SUCCESS);
     };
+  if (argc > 1 && (!strcmp(argv[1], "--debug") || !strcmp(argv[1], "-D")))
+    fxrps_debug = true;
   fxrps_dlhandle = dlopen(nullptr, RTLD_NOW| RTLD_GLOBAL);
   if (!fxrps_dlhandle)
     FXRPS_FATALOUT("failed to dlopen main program: " << dlerror());
@@ -157,7 +165,7 @@ main(int argc, char**argv)
                    << " got " << fxversion[0] << "." << fxversion[1]);
   FXApp app(basename((char*)fxrps_progname),
             "fox-refpersys.org");
-  constexpr int minwidth=100, minheight=80;
+  constexpr int minwidth=240, minheight=150;
   /// C++ code can now use FxApp::instance()
   app.init(argc, argv);
   if (argc > 1 && !strcmp(argv[1], "--help"))
@@ -169,22 +177,27 @@ main(int argc, char**argv)
   //printf("@@@@before FXRegistry  %s:%d\n", __FILE__, __LINE__);
   fflush(stdout);
   FXRegistry& reg = app.reg();
-  if (reg.read())
-    printf("@@@@reg sysdirs=%s userdir=%s read/appkey=%s vendkey=%s no=%ld\n",
-           reg.getSystemDirectories().text(),
-           reg.getUserDirectory().text(),
-           reg.getAppKey().text(), reg.getVendorKey().text(), reg.no());
-  else
+  if (reg.read()) {
+    FXRPS_DEBUGOUT("system directories:!" << reg.getSystemDirectories().text()
+		   << " user directory:!" << reg.getUserDirectory().text()
+		   << std::endl
+		   << "...  read/appkey:! " << reg.getAppKey().text()
+		   << " vendor:! " << reg.getVendorKey().text()
+		   << " registry size: " << reg.no());
+  } else {
     printf("@@@failed to read registry sysdirs=%s userdir=%s %s:%d\n",
            reg.getSystemDirectories().text(),
            reg.getUserDirectory().text(),
            __FILE__, __LINE__);
+  }
   int width=reg.readIntEntry("mainwin","width");
+  FXRPS_DEBUGOUT("mainwin raw width=" << width);
   if (width<=minwidth)
     width=minwidth;
   //printf("@@@@ width=%d %s:%d\n", width, __FILE__, __LINE__);
   //fflush(stdout);
   int height=reg.readIntEntry("mainwin","height");
+  FXRPS_DEBUGOUT("mainwin raw height=" << height);
   if (height<=minheight)
     height=minheight;
   app.create();
@@ -206,5 +219,12 @@ void fxrps_fatal_stop_at(const char*fil, int lin)
           fxrps_progname, (int)getpid(), fxrps_shortgit_id, fil, lin);
   abort();
 }
+
+/****************
+ **                           for Emacs...
+ ** Local Variables: ;;
+ ** compile-command: "make foxrps" ;;
+ ** End: ;;
+ ****************/
 
 //// end of file prog_fxrps.cc

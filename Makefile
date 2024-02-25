@@ -10,6 +10,7 @@ FXRPS_OPERSYS := $(shell /bin/uname -o | /bin/sed 1s/[^a-zA-Z0-9_]/_/g )
 CXXSOURCES= $(sort $(wildcard [a-z]*.cc))
 OBJECTS= $(patsubst %.cc, %.o, $(CXXSOURCES))
 RM= /bin/rm -vf
+PACKAGES= fox17 jsoncpp
 FXRPS_GIT_ID:= $(shell ./do-generate-gitid.sh)
 FXRPS_SHORTGIT_ID:= $(shell ./do-generate-gitid.sh -s)
 OPTIMFLAGS= -O2
@@ -20,7 +21,7 @@ CXXFLAGS= $(OPTIMFLAGS) $(DEBUGFLAGS) \
      -DFXRPS_HOST=\"$(FXRPS_HOST)\" -DFXRPS_ARCH=\"$(FXRPS_ARCH)\" \
      -DFXRPS_OPERSYS=\"$(FXRPS_OPERSYS)\" \
      -DFXRPS_FOXVERSION=\"$(shell fox-config --version)\" \
-     $(shell fox-config --cflags)
+     $(shell pkg-config --cflags $(PACKAGES))
 
 
 .PHONY: all clean indent
@@ -31,7 +32,7 @@ clean:
 	$(RM) $(wildcard *.o) foxrps *~ *.orig
 
 foxrps: $(OBJECTS)
-	$(LINK.cc) $(OBJECTS) $(shell fox-config --libs) -o $@
+	$(LINK.cc) $(OBJECTS) $(shell pkg-config --libs $(PACKAGES)) -ldl -o $@
 
 %.o: %.cc foxrps.hh
 	$(COMPILE.cc)  $< -o $@

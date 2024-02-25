@@ -56,6 +56,9 @@
 #include <unistr.h>
 
 
+/// libjansson
+#include "jansson.h"
+/// fox-toolkit.org
 #include "fx.h"
 
 extern "C" const char*fxrps_progname;
@@ -87,6 +90,9 @@ extern "C" [[noreturn]] void fxrps_fatal_stop_at(const char*fil, int lin);
   ("\033[4m")
 #define FXRPS_TERMINAL_BLINK_ESCAPE \
   ("\033[5m")
+
+
+
 
 //////////////// fatal error - aborting
 extern "C" void rps_fatal_stop_at (const char *, int) __attribute__((noreturn));
@@ -123,6 +129,20 @@ extern "C" void rps_fatal_stop_at (const char *, int) __attribute__((noreturn));
 // typical usage would be FXRPS_FATALOUT("x=" << x)
 #define FXRPS_FATALOUT(...) FXRPS_FATALOUT_AT(__FILE__,__LINE__,##__VA_ARGS__)
 
+
+////////////////////////////////////////////////////////////////
+//// debug messages
+extern "C" bool fxrps_debug;
+
+#define FXRPS_DEBUGOUT_AT_BIS(Fil,Lin,...) do {	\
+    if (fxrps_debug)				\
+      std::clog << (Fil) << ":" << (Lin) << "*"	\
+                << __VA_ARGS__ << std::endl;	\
+  } while(0)
+
+#define FXRPS_DEBUGOUT_AT(Fil,Lin,...) FXRPS_DEBUGOUT_AT_BIS(Fil,Lin,##__VA_ARGS__)
+// typical usage would be FXRPS_DEBUGOUT("x=" << x)
+#define FXRPS_DEBUGOUT(...) FXRPS_DEBUGOUT_AT(__FILE__,__LINE__,##__VA_ARGS__)
 
 
 class FoxRpsWindow : public FXMainWindow
