@@ -69,6 +69,18 @@ fxrps_show_help(void)
   printf("\t --version            # give version information\n");
   printf("# some FOX toolkit settings will be read from your configuration\n"
          "# file ~/.config/fox-refpersys.org/foxrps.rc\n");
+  printf("# the FOX toolkit handles the following arguments (single dashed):\n");
+  printf("\t -display XSERVER    # sets the Xorg display server\n");
+  printf("\t -shm                # use X11 shared memory\n");
+  printf("\t -noshm              # disable X11 shared memory\n");
+  printf("\t -sync               # synchronized slow X11 protocol\n");
+  printf("\t -im INPUTMETHOD     # X11 input method\n");
+  printf("\t -is INPUTSTYLE      # X11 input style\n");
+  printf("\t -tracelevel LEVEL   # FOX toolkit trace level\n");
+  printf("\t -tracetopics TOPICS # FOX toolkit trace topics\n");
+  printf("\t -config USERDIR     # FOX toolkit user directory\n");
+  printf("\t -ascii              # FOX toolkit registry in ASCII\n");
+  printf("\t -maxcolors NBCOLORS # FOX toolkit number of colors\n");
 #warning fxrps_show_help incomplete
 } // end fxrps_show_help
 
