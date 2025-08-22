@@ -1,6 +1,6 @@
 /****** file guifox-refpersys/prog_fxrps.cc ******
  * SPDX-License-Identifier: MIT
- * © Copyright 2023 - 2024 Basile Starynkevitch
+ * © Copyright 2023 - 2025 Basile Starynkevitch
  ******/
 
 #include "foxrps.hh"
@@ -197,10 +197,12 @@ main(int argc, char**argv)
 		   << " vendor:! " << reg.getVendorKey().text()
 		   << " registry size: " << reg.no());
   } else {
-    printf("@@@failed to read registry sysdirs=%s userdir=%s %s:%d\n",
+    printf("@@@failed to read registry sysdirs=%s"
+	   " userdir=%s  [err:%s] %s:%d\n",
            reg.getSystemDirectories().text(),
            reg.getUserDirectory().text(),
-           __FILE__, __LINE__);
+	   strerror(errno),
+           __FILE__, __LINE__-2);
   }
   int width=reg.readIntEntry("mainwin","width");
   FXRPS_DEBUGOUT("mainwin raw width=" << width);
